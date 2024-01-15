@@ -7,11 +7,6 @@ $username = "root";
 $password = "";
 $database = "dwp_pupr";
 
-// $host = "localhost";
-// $username = "aberkahc_dwp_pupr";
-// $password = "bT1D6WOBFY@@";
-// $database = "aberkahc_dwp_pupr";
-
 $conn = new mysqli($host, $username, $password, $database);
 
 // ========================================
