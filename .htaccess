@@ -1,0 +1,50 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php
+</IfModule>
+
+#CACHING
+<FilesMatch "\.(jpg|jpeg|png|gif|swf|css|js)$"> 
+Header set Cache-Control "max-age=29030400, public" 
+</FilesMatch>
+
+#GZIP_COMPRESSION
+<ifmodule mod_deflate.c> 
+AddOutputFilterByType DEFLATE text/css text/html text/plain application/javascript text/xml application/xml application/xhtml+xml application/rss+xml application/x-javascript 
+</ifmodule>
+
+<Files ~"^.*\.([Hh][Tt][Aa])">
+    order allow,deny
+    deny from all
+    satisfy all
+</Files>
+
+#disable_ekstensi_folder
+IndexIgnore *.tar.gz *.txt *.php *.html *.css *.js *.py *css *js *.jpg *.png *.jpeg *.JPG *.PNG *.JPEG *.pdf *.exe *.apk *fontawesome-free *admin
+
+#disable_directori_listing
+Options -Indexes  
+ 
+#REWRITE_RULE
+RewriteEngine On
+
+# ADMIN
+# Aturan untuk menangani URL bab_puskesmas & faskes_puskesmas
+RewriteRule ^admin/dashboard/document-puskesmas/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+) admin/includes/pages/index.php?bab_puskesmas=$1&faskes_puskesmas=$2&pagination=$3&page=$4 [L]
+
+# Aturan untuk menangani URL bab_klinik & faskes_klinik
+RewriteRule ^admin/dashboard/document-klinik/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+) admin/includes/pages/index.php?bab_klinik=$1&faskes_klinik=$2&pagination=$3&page=$4 [L]
+
+# PUSKES
+# Aturan untuk menangani URL bab_puskesmas & faskes_puskesmas
+RewriteRule ^admin/dashboard/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+)/([A-Za-z0-9+-]+) admin/includes/pages/index.php?pages=$1&pagination=$2&page=$3 [L]
+
+# Aturan untuk menangani parameter pages
+RewriteRule ^admin/dashboard/([A-Za-z0-9+-]+) admin/includes/pages/index.php?pages=$1 [L]
+RewriteRule ^admin/permissions/([A-Za-z+-]+) admin/includes/pages/permissions.php?permissions=$1 [L]
+
+#LANDING_PAGE
+RewriteRule ^news/([0-9A-Za-z-]+) includes/frontend/pages/news.php?detail_news=$1
+RewriteRule ^search/([0-9A-Za-z-]+) includes/frontend/pages/search.php?search=$1

@@ -1,0 +1,50 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 100px auto;
+
+}
+
+.img-fix {
+  text-align: center;
+}
+
+.img-fix img {
+  width: 100px;
+  box-shadow: 1px 1px 10px #aaa;
+  border-radius: 50%;
+}
+
+.img-fix h2 {
+  margin: auto;
+  max-width: 700px;
+}
+
+/* contact-maintenence */
+.contact-maintenence {
+  margin-top: 20px;
+}
+
+.contact-maintenence h4 {
+  margin-bottom: 20px;
+}
+
+.contact-maintenence a {
+  background-color: #4373df;
+  color: #fff;
+  padding: 10px;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 50px;
+}
+
+.contact-maintenence a:hover {
+  background-color: #2951af;
+}
