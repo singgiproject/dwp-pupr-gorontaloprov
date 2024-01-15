@@ -4,6 +4,7 @@ error_reporting(0);
 // URL WEBSITE
 $url = "https://dwp.pupr.gorontaloprov.a3berkah.com/";
 
+
 // Mendeteksi protokol yang digunakan (http atau https)
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
 
@@ -28,7 +29,7 @@ if (isset($_GET["detail_news"])) {
 
   $words = explode(" ", $detailNews["description"]);
   $shortDescription = implode(" ", array_slice($words, 0, 50));
-  $description = htmlspecialchars($shortDescription);
+  $description = htmlspecialchars(html_entity_decode(strip_tags($shortDescription)));
 
   $ogImage = $url . "assets/img/news/" . $detailNews["thumbnail"];
   $ogUrl = $url . "news/" . basename($_SERVER['REQUEST_URI']);
