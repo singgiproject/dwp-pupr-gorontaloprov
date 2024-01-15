@@ -2,8 +2,7 @@
 error_reporting(0);
 
 // URL WEBSITE
-$url = "http://localhost/dwp-pupr/";
-// $url = "dwp.pupr.gorontaloprov.a3berkah.com/";
+$url = "dwp.pupr.gorontaloprov.a3berkah.com/";
 
 // Mendeteksi protokol yang digunakan (http atau https)
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';

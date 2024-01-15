@@ -1,16 +1,9 @@
 <?php
-error_reporting(0);
-ini_set('display_errors', 0);
 // CONNTECTION DATABASE
 $host = "localhost";
-$username = "root";
-$password = "";
-$database = "dwp_pupr";
-
-// $host = "localhost";
-// $username = "aberkahc_dwp_pupr";
-// $password = "bT1D6WOBFY@@";
-// $database = "aberkahc_dwp_pupr";
+$username = "aberkahc_dwp_pupr";
+$password = "bT1D6WOBFY@@";
+$database = "aberkahc_dwp_pupr";
 
 $conn = new mysqli($host, $username, $password, $database);
 
