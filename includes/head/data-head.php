@@ -3,7 +3,7 @@ error_reporting(0);
 
 // URL WEBSITE
 $url = "http://localhost/dwp-pupr/";
-// $url = "dwp.pupr.prov.gorontalo.sdasd.com/";
+// $url = "dwp.pupr.gorontaloprov.a3berkah.com/";
 
 // Mendeteksi protokol yang digunakan (http atau https)
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
@@ -36,7 +36,7 @@ if (isset($_GET["detail_news"])) {
 } else {
   $description = "Selamat Datang di Website Resmi Darma Wanita Persatuan - PUPR Provinsi Gorontalo";
   $ogImage = $logo;
-  $ogUrl = "https://dwp.pupr.prov.gorontalo.a3berkah.com";
+  $ogUrl = "https://dwp.pupr.gorontaloprov.a3berkah.com";
 }
 
 
