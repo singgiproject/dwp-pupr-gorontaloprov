@@ -28,7 +28,7 @@ if (isset($_GET["detail_news"])) {
 
   $words = explode(" ", $detailNews["description"]);
   $shortDescription = implode(" ", array_slice($words, 0, 50));
-  $description = htmlspecialchars($shortDescription);
+  $description = htmlspecialchars(html_entity_decode(strip_tags($shortDescription)));
 
   $ogImage = $url . "assets/img/news/" . $detailNews["thumbnail"];
   $ogUrl = $url . "news/" . basename($_SERVER['REQUEST_URI']);
