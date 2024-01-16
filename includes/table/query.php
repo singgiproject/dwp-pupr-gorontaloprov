@@ -147,6 +147,12 @@ if (isset($_SESSION["login"])) {
 }
 
 // ------------------------------------------------
+// DOCUMENTS
+// ------------------------------------------------
+// === QUERY TABLE DOCUMENTS ===
+$documents = query("SELECT * FROM tb_documents");
+
+// ------------------------------------------------
 // SEARCH DATA 
 // ------------------------------------------------
 if (isset($_GET["search"])) {
@@ -175,4 +181,9 @@ if (isset($_POST["keyword_news"])) {
 // Search Work Program
 if (isset($_POST["keyword_work_program"])) {
   $workProgram = search_work_program($_POST["keyword_work_program"]);
+}
+
+// Search Documents
+if (isset($_POST["keyword_documents"])) {
+  $documents = search_documents($_POST["keyword_documents"]);
 }

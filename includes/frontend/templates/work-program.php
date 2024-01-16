@@ -12,58 +12,6 @@
   <div class="content-news">
     <div class="row">
 
-
-      <!-- DATA WORK PROGRAM -->
-      <?php
-      // Hitung berapa data yang ingin ditampilkan per halaman
-      $dataPerPageWorkProgram = 10;
-
-      // Simulasikan data dari basis data Anda (ganti dengan data sesuai kebutuhan)
-      $dataWorkProgram = [];
-
-      foreach ($workProgram as $row) {
-        // RESULT
-        $idWorkProgram = $row["id"];
-        $kegiatanWorkProgram = $row["kegiatan"];
-        $tujuanWorkProgram = $row["tujuan"];
-        $waktuWorkProgram = $row["waktu"];
-        $penanggungJawabWorkProgram = $row["penanggung_jawab"];
-        $anggaranWorkProgram = $row["anggaran"];
-        $ketWorkProgram = $row["ket"];
-        $dateWorkProgram = $row["date"];
-        $timeWorkProgram = $row["time"];
-
-        $dataWorkProgram[] = [
-          "$idWorkProgram",
-          "$kegiatanWorkProgram",
-          "$tujuanWorkProgram",
-          "$waktuWorkProgram",
-          "$penanggungJawabWorkProgram",
-          "$anggaranWorkProgram",
-          "$ketWorkProgram",
-          "$dateWorkProgram",
-          "$timeWorkProgram",
-        ];
-      }
-
-      // Ambil nilai halaman saat ini dari URL
-      $currentPageWorkProgram = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-      // Hitung offset untuk data yang akan ditampilkan pada halaman saat ini
-      $offsetWorkProgram = ($_GET["page"] - 1) * $dataPerPageWorkProgram;
-
-      // Ambil data yang sesuai dengan halaman saat ini
-      $dataToShowWorkProgram = array_slice($dataWorkProgram, $offsetWorkProgram, $dataPerPageWorkProgram);
-
-      // Hitung jumlah halaman
-      $totalDataWorkProgram = count($dataWorkProgram);
-      $totalPagesWorkProgram = ceil($totalDataWorkProgram / $dataPerPageWorkProgram);
-
-      $noTableWorkProgram = ($currentPageWorkProgram - 1) * $dataPerPageWorkProgram + 1;
-
-      ?>
-
-
       <div class="head-title-content mt-5 mb-3">
         <h4><span>PROGRAM</span> KERJA</h4>
       </div>
@@ -93,38 +41,39 @@
           </tr>
         </tfoot>
         <tbody>
-          <?php foreach ($dataToShowWorkProgram as $itemWorkProgram) : ?>
+          <?php $noTable = 1; ?>
+          <?php foreach ($workProgram as $rowWorkProgram) : ?>
             <tr>
-              <td><?= $noTableWorkProgram; ?></td>
-              <td><?= $itemWorkProgram[1]; ?></td>
-              <td><?= $itemWorkProgram[2]; ?></td>
-              <td><?= $itemWorkProgram[3]; ?></td>
+              <td><?= $noTable; ?></td>
+              <td><?= $rowWorkProgram["kegiatan"]; ?></td>
+              <td><?= $rowWorkProgram["tujuan"]; ?></td>
+              <td><?= $rowWorkProgram["waktu"]; ?></td>
               <td>
                 <?php foreach ($team as $row) : ?>
-                  <?php if ($row["id"] === $itemWorkProgram[4]) : ?>
+                  <?php if ($row["id"] === $rowWorkProgram["penanggung_jawab"]) : ?>
                     <?= $row["name"]; ?> (<?= $row["position"]; ?>)
                   <?php endif; ?>
                 <?php endforeach; ?>
               </td>
               <td>
-                <?php if (empty($itemWorkProgram[5])) : ?>
+                <?php if (empty($rowWorkProgram["anggaran"])) : ?>
                   <center>-</center>
                 <?php else : ?>
-                  Rp<?= $itemWorkProgram[5]; ?>
+                  Rp<?= $rowWorkProgram["anggaran"]; ?>
                 <?php endif; ?>
               </td>
               <td>
-                <?php if (empty($itemWorkProgram[6])) : ?>
+                <?php if (empty($rowWorkProgram["ket"])) : ?>
                   <center>-</center>
                 <?php else : ?>
-                  <?= $itemWorkProgram[6]; ?>
+                  <?= $rowWorkProgram["ket"]; ?>
                 <?php endif; ?>
               </td>
               <td>
-                <?= day_id($itemWorkProgram[7]); ?>,
-                <?= date_id($itemWorkProgram[7]); ?></td>
+                <?= day_id($rowWorkProgram["date"]); ?>,
+                <?= date_id($rowWorkProgram["date"]); ?></td>
             </tr>
-            <?php $noTableWorkProgram++; ?>
+            <?php $noTable++; ?>
           <?php endforeach; ?>
 
         </tbody>

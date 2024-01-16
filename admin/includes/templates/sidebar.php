@@ -12,7 +12,8 @@ if ($_GET["pages"] === "home" or $_GET["pages"] === "welcome") {
 // MENU ACTIVE PAGE COMPONENT
 if (
   $_GET["pages"] === "news" or
-  $_GET["pages"] === "work-program"
+  $_GET["pages"] === "work-program" or
+  $_GET["pages"] === "documents"
 ) {
   $componentActive = "active-sidebar";
 }
@@ -27,6 +28,11 @@ if (
   $_GET["pages"] === "work-program"
 ) {
   $workProgramActive = "active-sidebar-list";
+}
+if (
+  $_GET["pages"] === "documents"
+) {
+  $documentsActive = "active-sidebar-list";
 }
 
 // MENU ACTIVE PAGE SISTEM
@@ -123,6 +129,12 @@ if (
           <li class="<?= $workProgramActive; ?>">
             <a href="<?= $url; ?>admin/dashboard/work-program/page/1">
               <i class="bi bi-circle"></i><span>Program Kerja</span>
+            </a>
+          </li>
+
+          <li class="<?= $documentsActive; ?>">
+            <a href="<?= $url; ?>admin/dashboard/documents/page/1">
+              <i class="bi bi-circle"></i><span>Dokumen</span>
             </a>
           </li>
         </ul>

@@ -260,6 +260,15 @@
                       </tr>
                     </tfoot>
                     <tbody>
+                      <?php if (isset($_POST["submit_search_news"])) : ?>
+                        <?php if (empty($dataToShowNews)) : ?>
+                          <tr>
+                            <td colspan="7">
+                              <center>Tidak ada data dalam tabel</center>
+                            </td>
+                          </tr>
+                        <?php endif; ?>
+                      <?php endif; ?>
                       <?php foreach ($dataToShowNews as $itemNews) : ?>
                         <?php
                         $titleNews = $itemNews[1];
