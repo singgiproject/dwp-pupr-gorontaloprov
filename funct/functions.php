@@ -629,6 +629,7 @@ function uploadThumbnailNews()
 function add_work_program($data)
 {
   global $conn;
+  date_default_timezone_set('Asia/Makassar');
 
   $kegiatan = mysqli_real_escape_string($conn, htmlspecialchars($data["kegiatan"]));
   $tujuan = mysqli_real_escape_string($conn, htmlspecialchars($data["tujuan"]));
@@ -1227,6 +1228,7 @@ function uploadImageAbout()
 function editInformation($data)
 {
   global $conn;
+  date_default_timezone_set('Asia/Makassar');
 
   $id = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id"]))))))))));
 
@@ -1257,14 +1259,16 @@ function editInformation($data)
 function add_absen_pagi($data)
 {
   global $conn, $idSession;
+  date_default_timezone_set('Asia/Makassar');
 
+  $idWorkProgram = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id_work_program"]))))))))));
   $date = date("Y-m-d");
   $clockIn = date("H-i-s");
   $clockOut = "0";
   $location = mysqli_real_escape_string($conn, htmlspecialchars($data["location"]));
   $description = "0";
 
-  $query = "INSERT INTO tb_attendances VALUES(null, '$idSession', '$date','$clockIn','$clockOut', '$location', '$description')";
+  $query = "INSERT INTO tb_attendances VALUES(null, '$idSession', '$idWorkProgram', '$date','$clockIn','$clockOut', '$location', '$description')";
   mysqli_query($conn, $query);
 
   return mysqli_affected_rows($conn);
@@ -1274,6 +1278,7 @@ function add_absen_pagi($data)
 function add_absen_pulang($data)
 {
   global $conn;
+  date_default_timezone_set('Asia/Makassar');
 
   $id = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id"]))))))))));
   $clockOut = date("H-i-s");
@@ -1290,14 +1295,15 @@ function add_absen_pulang($data)
 function add_absen_sakit($data)
 {
   global $conn, $idSession;
-
+  date_default_timezone_set('Asia/Makassar');
+  $idWorkProgram = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id_work_program"]))))))))));
   $date = date("Y-m-d");
   $clockIn = "1";
   $clockOut = "1";
   $location = mysqli_real_escape_string($conn, htmlspecialchars($data["location"]));
   $description = mysqli_real_escape_string($conn, htmlspecialchars($data["description"]));
 
-  $query = "INSERT INTO tb_attendances VALUES(null, '$idSession', '$date','$clockIn','$clockOut', '$location', '$description')";
+  $query = "INSERT INTO tb_attendances VALUES(null, '$idSession', '$idWorkProgram', '$date','$clockIn','$clockOut', '$location', '$description')";
   mysqli_query($conn, $query);
 
   return mysqli_affected_rows($conn);
@@ -1307,19 +1313,28 @@ function add_absen_sakit($data)
 function add_absen_izin($data)
 {
   global $conn, $idSession;
-
+  date_default_timezone_set('Asia/Makassar');
+  $idWorkProgram = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id_work_program"]))))))))));
   $date = date("Y-m-d");
   $clockIn = "2";
   $clockOut = "2";
   $location = "0";
   $description = mysqli_real_escape_string($conn, htmlspecialchars($data["description"]));
 
-  $query = "INSERT INTO tb_attendances VALUES(null, '$idSession', '$date','$clockIn','$clockOut', '$location', '$description')";
+  $query = "INSERT INTO tb_attendances VALUES(null, '$idSession', '$idWorkProgram', '$date','$clockIn','$clockOut', '$location', '$description')";
   mysqli_query($conn, $query);
 
   return mysqli_affected_rows($conn);
 }
 
+// === FUNCTION DELETE MESSAGE ===
+function delete_absen($idAbsen)
+{
+  global $conn;
+
+  mysqli_query($conn, "DELETE FROM tb_attendances WHERE id = '$idAbsen' ");
+  return mysqli_affected_rows($conn);
+}
 
 // === FUNCTION DELETE MESSAGE ===
 function delete_message($idMessage)
@@ -1328,4 +1343,121 @@ function delete_message($idMessage)
 
   mysqli_query($conn, "DELETE FROM tb_messages WHERE id = '$idMessage' ");
   return mysqli_affected_rows($conn);
+}
+
+
+
+// === FUNCTION ADD DOCUMENTS ===
+function add_documents($data)
+{
+  global $conn;
+  date_default_timezone_set('Asia/Makassar');
+
+  $title = mysqli_real_escape_string($conn, htmlspecialchars($data["title"]));
+  $file = uploadFileDocuments();
+  if (!$file) {
+    return false;
+  }
+  $date = date("Y-m-d");
+
+  $query = "INSERT INTO tb_documents VALUES(null,'$title', '$file', '$date')";
+  mysqli_query($conn, $query);
+
+  return mysqli_affected_rows($conn);
+}
+
+// === FUNCTION UPDATE/EDIT DOCUMENTS ===
+function edit_documents($data)
+{
+  global $conn;
+  date_default_timezone_set('Asia/Makassar');
+
+  $id = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id"]))))))))));
+  $title = mysqli_real_escape_string($conn, htmlspecialchars($data["title"]));
+  $oldFileDocuments = mysqli_real_escape_string($conn, htmlspecialchars($data["old_file_documents"]));
+
+  if ($_FILES['file']['error'] === 4) {
+    $file = $oldFileDocuments;
+  } else {
+    $file = uploadFileDocuments();
+  }
+
+  $query = "UPDATE tb_documents SET
+  title = '$title', 
+  file = '$file'
+  WHERE id = '$id' ";
+  mysqli_query($conn, $query);
+
+  return mysqli_affected_rows($conn);
+}
+
+
+// === FUNCTION DELETE DOCUMENTS ===
+function delete_documents($idDocuments)
+{
+  global $conn;
+
+  mysqli_query($conn, "DELETE FROM tb_documents WHERE id = '$idDocuments' ");
+  return mysqli_affected_rows($conn);
+}
+
+
+// === FUNCTION UPLOAD FILE DOCUMENTS ===
+function uploadFileDocuments()
+{
+  $fileName = $_FILES['file']['name'];
+  $fileSize = $_FILES['file']['size'];
+  $error = $_FILES['file']['error'];
+  $tmpName = $_FILES['file']['tmp_name'];
+
+  // check empty file
+  if ($error === 4) {
+    echo "
+		<script>
+			alert('Pilih file terlebih dahulu');
+      document.location.href = '';
+		</script>";
+    return false;
+  }
+
+  // check enxtionsion file
+  $fileValidExtension = ['pdf', 'docx', 'doc', 'xlsx'];
+  $fileExtension = explode('.', $fileName);
+  $fileExtension = strtolower(end($fileExtension));
+  if (!in_array($fileExtension, $fileValidExtension)) {
+    echo "
+		<script>
+			alert('Yang anda upload bukan extensi yang diminta!');
+      document.location.href = '';
+		</script>";
+    return false;
+  }
+
+  // check file size
+  if ($fileSize > 2000000) {
+    echo "
+		<script>
+			alert('Ukuran file terlalu besar!');
+      document.location.href = '';
+		</script>";
+    return false;
+  }
+
+  // checked true
+  // generate new file name
+  $newFileName = uniqid($fileName . '_');
+  $newFileName .= '.';
+  $newFileName .= $fileExtension;
+
+  move_uploaded_file($tmpName, '../../../downloads/documents/' . $newFileName);
+  return $newFileName;
+}
+
+
+// ====== FUNCTION DOCUMENTS ======
+function search_documents($keywordDocuments)
+{
+  $query = "SELECT * FROM tb_documents WHERE
+  title LIKE '%$keywordDocuments%'";
+  return query($query);
 }

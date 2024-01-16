@@ -11,133 +11,184 @@
   <!-- Content -->
   <div class="content-news">
     <div class="row">
-      <!-- DATA WORK PROGRAM -->
-      <?php
-      // Hitung berapa data yang ingin ditampilkan per halaman
-      $dataPerPageAbsenSession = 10;
-
-      // Simulasikan data dari basis data Anda (ganti dengan data sesuai kebutuhan)
-      $dataAbsenSession = [];
-
-      foreach ($absenSession as $row) {
-        // RESULT
-        $idAbsenSession = $row["id"];
-        $tglAbsenSession = $row["tgl"];
-        $clockInAbsenSession = $row["clock_in"];
-        $clockOutAbsenSession = $row["clock_out"];
-        $locationAbsenSession = $row["location"];
-        $descriptionAbsenSession = $row["description"];
-
-        $dataAbsenSession[] = [
-          "$idAbsenSession",
-          "$tglAbsenSession",
-          "$clockInAbsenSession",
-          "$clockOutAbsenSession",
-          "$locationAbsenSession",
-          "$descriptionAbsenSession",
-        ];
-      }
-
-      // Ambil nilai halaman saat ini dari URL
-      $currentPageAbsenSession = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-      // Hitung offset untuk data yang akan ditampilkan pada halaman saat ini
-      $offsetAbsenSession = ($_GET["page"] - 1) * $dataPerPageAbsenSession;
-
-      // Ambil data yang sesuai dengan halaman saat ini
-      $dataToShowAbsenSession = array_slice($dataAbsenSession, $offsetAbsenSession, $dataPerPageAbsenSession);
-
-      // Hitung jumlah halaman
-      $totalDataAbsenSession = count($dataAbsenSession);
-      $totalPagesAbsenSession = ceil($totalDataAbsenSession / $dataPerPageAbsenSession);
-
-      $noTableAbsenSession = ($currentPageAbsenSession - 1) * $dataPerPageAbsenSession + 1;
-
-      ?>
-
 
       <div class="head-title-content mt-5 mb-3">
         <h4><span>ABSENSI</span> ANGGOTA</h4>
       </div>
-      <h5 class="text-center mt-2 mb-3">Halo, <strong><?= $rowSession["full_name"]; ?>!</strong></h5>
-      <table class="table table table-striped table-hover mt-4" id="data_table">
-        <thead>
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Tanggal</th>
-            <th scope="col">Jam Masuk</th>
-            <th scope="col">Jam Keluar</th>
-            <th scope="col">Lokasi</th>
-            <th scope="col">Keterangan</th>
-            <th scope="col">Deskripsi</th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Tanggal</th>
-            <th scope="col">Jam Masuk</th>
-            <th scope="col">Jam Keluar</th>
-            <th scope="col">Lokasi</th>
-            <th scope="col">Keterangan</th>
-            <th scope="col">Deskripsi</th>
-          </tr>
-        </tfoot>
-        <tbody>
-          <?php foreach ($dataToShowAbsenSession as $itemAbsenSession) : ?>
-            <tr>
-              <td><?= $noTableAbsenSession; ?></td>
-              <td>
-                <?= day_id($itemAbsenSession[1]); ?>,
-                <?= date_id($itemAbsenSession[1]); ?>
-              </td>
-              <td>
-                <?php if (strlen($itemAbsenSession[2]) > 2) : ?>
-                  <?= str_replace("-", ":", $itemAbsenSession[2]); ?>
-                <?php elseif ($itemAbsenSession[2] === "1" || $itemAbsenSession[2] === "2") : ?>
-                  -
-                <?php endif; ?>
-              </td>
-              <td>
-                <?php if ($itemAbsenSession[3] === "0") : ?>
-                  -
-                <?php elseif (strlen($itemAbsenSession[3]) > 2) : ?>
-                  <?= str_replace("-", ":", $itemAbsenSession[3]); ?>
-                <?php elseif ($itemAbsenSession[3] === "1" || $itemAbsenSession[3] === "2") : ?>
-                  -
-                <?php endif; ?>
-              </td>
-              <td>
-                <?php if ($itemAbsenSession[4] === "0") : ?>
-                  -
-                <?php elseif (strlen($itemAbsenSession[4]) > 2) : ?>
-                  <a href="https://www.google.com/maps?q=<?= $itemAbsenSession[4]; ?>" target="_blank" class="badge rounded-pill text-bg-info"><i class="bi bi-geo-alt-fill"></i> Lokasi</a>
-                <?php endif; ?>
-              </td>
-              <td>
-                <?php if ($itemAbsenSession[3] === "0") : ?>
-                  <span class="badge rounded-pill text-bg-warning">Belum absen pulang</span>
-                <?php elseif (strlen($itemAbsenSession[3]) > 2) : ?>
-                  <span class="badge rounded-pill text-bg-success">Hadir</span>
-                <?php elseif ($itemAbsenSession[2] === "1") : ?>
-                  <span class="badge rounded-pill text-bg-danger">Sakit</span>
-                <?php elseif ($itemAbsenSession[2] === "2") : ?>
-                  <span class="badge rounded-pill text-bg-warning">Izin</span>
-                <?php endif; ?>
-              </td>
-              <td>
-                <?php if ($itemAbsenSession[5] === "0") : ?>
-                  -
-                <?php else : ?>
-                  <?= $itemAbsenSession[5]; ?>
-                <?php endif; ?>
-              </td>
-            </tr>
-            <?php $noTableAbsenSession++; ?>
-          <?php endforeach; ?>
 
-        </tbody>
-      </table>
+      <?php if (!isset($_GET["tab"])) : ?>
+        <h5 class="text-center mt-2 mb-3">Halo, <strong><?= $rowSession["full_name"]; ?>!</strong></h5>
+        <table class="table table table-striped table-hover mt-4" id="data_table">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Kegiatan</th>
+              <th scope="col">Tujuan</th>
+              <th scope="col">Waktu</th>
+              <th scope="col">Penanggung Jawab</th>
+              <th scope="col">Anggaran</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Ditambahkan</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Kegiatan</th>
+              <th scope="col">Tujuan</th>
+              <th scope="col">Waktu</th>
+              <th scope="col">Penanggung Jawab</th>
+              <th scope="col">Anggaran</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Ditambahkan</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <?php $noTable = 1; ?>
+            <?php foreach ($workProgram as $rowWorkProgram) : ?>
+              <tr>
+                <td><?= $noTable; ?></td>
+                <td><?= $rowWorkProgram["kegiatan"]; ?></td>
+                <td><?= $rowWorkProgram["tujuan"]; ?></td>
+                <td><?= $rowWorkProgram["waktu"]; ?></td>
+                <td>
+                  <?php foreach ($team as $row) : ?>
+                    <?php if ($row["id"] === $rowWorkProgram["penanggung_jawab"]) : ?>
+                      <?= $row["name"]; ?> (<?= $row["position"]; ?>)
+                    <?php endif; ?>
+                  <?php endforeach; ?>
+                </td>
+                <td>
+                  <?php if (empty($rowWorkProgram["anggaran"])) : ?>
+                    <center>-</center>
+                  <?php else : ?>
+                    Rp<?= $rowWorkProgram["anggaran"]; ?>
+                  <?php endif; ?>
+                </td>
+                <td>
+                  <?php if (empty($rowWorkProgram["ket"])) : ?>
+                    <center>-</center>
+                  <?php else : ?>
+                    <?= $rowWorkProgram["ket"]; ?>
+                  <?php endif; ?>
+                </td>
+                <td>
+                  <?= day_id($rowWorkProgram["date"]); ?>,
+                  <?= date_id($rowWorkProgram["date"]); ?>
+                </td>
+                <td>
+                  <a href="<?= $url; ?>attendances?tab=<?= $rowWorkProgram["id"];  ?>" class="btn btn-success">Absen</a>
+                </td>
+              </tr>
+              <?php $noTable++; ?>
+            <?php endforeach; ?>
+
+          </tbody>
+        </table>
+      <?php endif; ?>
+
+
+
+      <?php if (isset($_GET["tab"])) : ?>
+
+        <?php foreach ($workProgram as $rowWorkProgram) : ?>
+          <?php if ($rowWorkProgram["id"] === $_GET["tab"]) : ?>
+            <h5 class="text-center mt-2 mb-3">Program Kerja : <strong><?= $rowWorkProgram["kegiatan"]; ?></strong></h5>
+          <?php endif; ?>
+        <?php endforeach; ?>
+
+        <li style="list-style: none;">
+          <a href="<?= $url; ?>attendances" class="btn btn-success mb-4"><i class="bi bi-chevron-left"></i> Kembali</a>
+        </li>
+        <!-- TAB ABSENSI -->
+        <table class="table table table-striped table-hover mt-4" id="data_table">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Jam Masuk</th>
+              <th scope="col">Jam Keluar</th>
+              <th scope="col">Lokasi</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Deskripsi</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Jam Masuk</th>
+              <th scope="col">Jam Keluar</th>
+              <th scope="col">Lokasi</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Deskripsi</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <?php $noTableAbsenSession = 1; ?>
+            <?php foreach ($absenSession as $rowAbsenSession) : ?>
+              <?php if ($rowAbsenSession["id_work_program"] === $_GET["tab"]) : ?>
+                <tr>
+                  <td><?= $noTableAbsenSession; ?></td>
+                  <td>
+                    <?= day_id($rowAbsenSession["tgl"]); ?>,
+                    <?= date_id($rowAbsenSession["tgl"]); ?>
+                  </td>
+                  <td>
+                    <?php if (strlen($rowAbsenSession["clock_in"]) > 2) : ?>
+                      <?= str_replace("-", ":", $rowAbsenSession["clock_in"]); ?>
+                    <?php elseif ($rowAbsenSession["clock_in"] === "1" || $rowAbsenSession["clock_in"] === "2") : ?>
+                      -
+                    <?php endif; ?>
+                  </td>
+                  <td>
+                    <?php if ($rowAbsenSession["clock_out"] === "0") : ?>
+                      -
+                    <?php elseif (strlen($rowAbsenSession["clock_out"]) > 2) : ?>
+                      <?= str_replace("-", ":", $rowAbsenSession["clock_out"]); ?>
+                    <?php elseif ($rowAbsenSession["clock_out"] === "1" || $rowAbsenSession["clock_out"] === "2") : ?>
+                      -
+                    <?php endif; ?>
+                  </td>
+                  <td>
+                    <?php if ($rowAbsenSession["location"] === "0") : ?>
+                      -
+                    <?php elseif (strlen($rowAbsenSession["location"]) > 2) : ?>
+                      <a href="https://www.google.com/maps?q=<?= $rowAbsenSession["location"]; ?>" target="_blank" class="badge rounded-pill text-bg-info"><i class="bi bi-geo-alt-fill"></i> Lokasi</a>
+                    <?php endif; ?>
+                  </td>
+                  <td>
+                    <?php if ($rowAbsenSession["clock_out"] === "0") : ?>
+                      <span class="badge rounded-pill text-bg-warning">Belum absen pulang</span>
+                    <?php elseif (strlen($rowAbsenSession["clock_out"]) > 2) : ?>
+                      <span class="badge rounded-pill text-bg-success">Hadir</span>
+                    <?php elseif ($rowAbsenSession["clock_in"] === "1") : ?>
+                      <span class="badge rounded-pill text-bg-danger">Sakit</span>
+                    <?php elseif ($rowAbsenSession["clock_in"] === "2") : ?>
+                      <span class="badge rounded-pill text-bg-warning">Izin</span>
+                    <?php endif; ?>
+                  </td>
+                  <td>
+                    <?php if ($rowAbsenSession["description"] === "0") : ?>
+                      -
+                    <?php else : ?>
+                      <?= $rowAbsenSession["description"]; ?>
+                    <?php endif; ?>
+                  </td>
+                  <td>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalDeletedAbsen<?= $rowAbsenSession["id"]; ?>" title="Hapus"><i class="bi bi-x-circle-fill text-danger"></i></a>
+                  </td>
+                </tr>
+                <?php $noTableAbsenSession++; ?>
+              <?php endif; ?>
+            <?php endforeach; ?>
+
+          </tbody>
+        </table>
 
     </div>
 
@@ -151,6 +202,7 @@
               <?php foreach ($locationSessionDESC_LIMIT1 as $rowLocation) : ?>
                 <input type="text" name="location" hidden value="<?= $rowLocation["latitude"]; ?>,<?= $rowLocation["longitude"]; ?>">
               <?php endforeach; ?>
+              <input type="text" hidden name="id_work_program" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($_GET["tab"]))))))))); ?>">
               <input type="text" name="add_absen_pagi_success" hidden>
               <button class="btn btn-success" type="submit" name="add_absen_pagi">ABSEN MASUK</button>
             </form>
@@ -169,6 +221,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" method="post">
+                  <input type="text" hidden name="id_work_program" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($_GET["tab"]))))))))); ?>">
                   <div class="modal-body">
                     <?php foreach ($locationSessionDESC_LIMIT1 as $rowLocation) : ?>
                       <input type="text" name="location" hidden value="<?= $rowLocation["latitude"]; ?>,<?= $rowLocation["longitude"]; ?>">
@@ -198,6 +251,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" method="post">
+                  <input type="text" hidden name="id_work_program" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($_GET["tab"]))))))))); ?>">
                   <div class="modal-body">
                     <?php foreach ($locationSessionDESC_LIMIT1 as $rowLocation) : ?>
                       <input type="text" name="location" hidden value="<?= $rowLocation["latitude"]; ?>,<?= $rowLocation["longitude"]; ?>">
@@ -228,6 +282,7 @@
             <!-- Absen Masuk -->
             <li>
               <form action="" method="post">
+                <input type="text" hidden name="id_work_program" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($_GET["tab"]))))))))); ?>">
                 <?php foreach ($locationSessionDESC_LIMIT1 as $rowLocation) : ?>
                   <input type="text" name="location" hidden value="<?= $rowLocation["latitude"]; ?>,<?= $rowLocation["longitude"]; ?>">
                 <?php endforeach; ?>
@@ -249,6 +304,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <form action="" method="post">
+                    <input type="text" hidden name="id_work_program" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($_GET["tab"]))))))))); ?>">
                     <div class="modal-body">
                       <?php foreach ($locationSessionDESC_LIMIT1 as $rowLocation) : ?>
                         <input type="text" name="location" hidden value="<?= $rowLocation["latitude"]; ?>,<?= $rowLocation["longitude"]; ?>">
@@ -278,6 +334,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <form action="" method="post">
+                    <input type="text" hidden name="id_work_program" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($_GET["tab"]))))))))); ?>">
                     <div class="modal-body">
                       <?php foreach ($locationSessionDESC_LIMIT1 as $rowLocation) : ?>
                         <input type="text" name="location" hidden value="<?= $rowLocation["latitude"]; ?>,<?= $rowLocation["longitude"]; ?>">
@@ -299,12 +356,12 @@
       <?php endif; ?>
     <?php endforeach; ?>
 
-    <?php if ($itemAbsenSession[3] === "0") : ?>
+    <?php if ($rowAbsenSession["clock_out"] === "0") : ?>
       <!-- Check absen pulang -->
       <div class="row">
         <div class="col-12 button-absen">
           <form action="" method="post">
-            <input type="text" hidden name="id" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($itemAbsenSession[0]))))))))); ?>">
+            <input type="text" hidden name="id" value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($rowAbsenSession["id"]))))))))); ?>">
             <input type="text" name="add_absen_pulang_success" hidden>
             <button class="btn btn-warning" type="submit" name="add_absen_pulang">ABSEN PULANG</button>
           </form>
@@ -314,7 +371,7 @@
 
     <?php foreach ($absenSessionDESC_LIMIT1 as $row) : ?>
       <?php if ($row["tgl"] === date("Y-m-d")) : ?>
-        <?php if ($itemAbsenSession[3] !== "0") : ?>
+        <?php if ($rowAbsenSession["clock_out"] !== "0") : ?>
           <div class="row">
             <div class="col-12 button-absen">
               <form action="" method="post">
@@ -325,6 +382,45 @@
         <?php endif; ?>
       <?php endif; ?>
     <?php endforeach; ?>
+
+
+    <!-- MODAL DELETE ABSEN -->
+    <?php foreach ($absenSession as $rowAbsenSession) : ?>
+      <?php if ($rowAbsenSession["id_work_program"] === $_GET["tab"]) : ?>
+        <div class="modal modal-dark-mode fade" id="modalDeletedAbsen<?= $rowAbsenSession["id"]; ?>" tabindex="-1" aria-labelledby="exampleModalLabelDeletedAbsen<?= $rowAbsenSession["id"]; ?>" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelDeletedAbsen<?= $rowAbsenSession["id"]; ?>">Hapus?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Absen dihari
+                  <strong>
+                    <?= day_id($rowAbsenSession["tgl"]); ?>,
+                    <?= date_id($rowAbsenSession["tgl"]); ?>
+                  </strong>
+                  akan dihapus
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batalkan</button>
+                <form action="" method="post">
+                  <input type="text" name="id" hidden value="<?= base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($rowAbsenSession["id"]))))))))); ?>">
+                  <input type="text" name="deleted_success" value="deleted_success" hidden>
+                  <button type="submit" name="del_absen" class="btn btn-danger">Hapus</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endif; ?>
+    <?php endforeach; ?>
+    <!-- end MODAL DELETE DOCUMENTS -->
+
+
+    <!-- end TAB ABSENSI -->
+  <?php endif; ?>
 
 
   </div>
@@ -393,6 +489,23 @@ if (isset($_SESSION["session_add_absen_pulang_success"]) && isset($_SESSION["exp
         timer: 4000
       });
     });
+  </script>
+<?php endif; ?>
+
+<!-- Notification Deleted Success -->
+<?php
+// Tampilkan session jika ada dan belum kadaluarsa
+if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_deleted_success"]) && $_SESSION["expiry_time_deleted_success"] > time()) : ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        title: "Absen berhasil dihapus!",
+        icon: "success",
+        position: "center",
+        timer: 4000 // 
+      });
+    });
+    unset($_SESSION["session_deleted_success"]); // Clear the notification session
   </script>
 <?php endif; ?>
 
@@ -483,6 +596,7 @@ if (isset($_SESSION["session_add_absen_pulang_success"]) && isset($_SESSION["exp
         ?>
       <?php endif; ?>
     <?php endif; ?>
+
   <?php endif; ?>
 <?php endif; ?>
 
@@ -496,6 +610,19 @@ if (isset($_SESSION["session_add_absen_pulang_success"]) && isset($_SESSION["exp
     // Buat session dengan nama "session_add_absen_pulang_success" dengan waktu kadaluarsa
     $_SESSION["session_add_absen_pulang_success"] = $addSuccess;
     $_SESSION["expiry_time_add_absen_pulang_success_pulang"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+    ?>
+  <?php endif; ?>
+<?php endif; ?>
+
+<?php if (isset($_POST["del_absen"])) : ?>
+  <?php if (delete_absen(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($_POST["id"])))))))))) > 0) : ?>
+    <?php
+    echo "<script>document.location.href = '';</script>";
+    $deletedSuccess = $_POST["deleted_success"];
+
+    // Buat session dengan nama "session_deleted_success" dengan waktu kadaluarsa
+    $_SESSION["session_deleted_success"] = $deletedSuccess;
+    $_SESSION["expiry_time_deleted_success"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
     ?>
   <?php endif; ?>
 <?php endif; ?>

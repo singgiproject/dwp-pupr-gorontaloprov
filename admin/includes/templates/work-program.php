@@ -142,6 +142,15 @@
                       </tr>
                     </tfoot>
                     <tbody>
+                      <?php if (isset($_POST["submit_search_work_program"])) : ?>
+                        <?php if (empty($dataToShowWorkProgram)) : ?>
+                          <tr>
+                            <td colspan="9">
+                              <center>Tidak ada data dalam tabel</center>
+                            </td>
+                          </tr>
+                        <?php endif; ?>
+                      <?php endif; ?>
                       <?php foreach ($dataToShowWorkProgram as $itemWorkProgram) : ?>
                         <tr>
                           <td><?= $noTableWorkProgram; ?></td>

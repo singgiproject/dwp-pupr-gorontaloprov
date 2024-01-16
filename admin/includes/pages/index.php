@@ -85,6 +85,12 @@ if ($_GET["pages"] === "work-program") {
 }
 // ------ end PAGE WORK PROGRAM ------
 
+// ------ PAGE DOCUMENTS ------
+if ($_GET["pages"] === "documents") {
+  $pageTitle = "Dokumen";
+}
+// ------ end PAGE DOCUMENTS ------
+
 if ($_GET["pages"] === "users") {
   $pageTitle = "Akun User";
 }
@@ -104,7 +110,8 @@ if (
   $_GET["pages"] !== "profile" and
   $_GET["pages"] !== "news" and
   $_GET["pages"] !== "users" and
-  $_GET["pages"] !== "work-program"
+  $_GET["pages"] !== "work-program" and
+  $_GET["pages"] !== "documents"
 ) {
   header("Location:home");
   exit;
@@ -141,12 +148,16 @@ if (
     <!-- End News -->
   <?php endif; ?>
 
-  <?php if (
-    $_GET["pages"] === "work-program"
-  ) : ?>
+  <?php if ($_GET["pages"] === "work-program") : ?>
     <!-- ======= Work Program ======= -->
     <?php include("../templates/work-program.php"); ?>
     <!-- End Work Program -->
+  <?php endif; ?>
+
+  <?php if ($_GET["pages"] === "documents") : ?>
+    <!-- ======= Documents ======= -->
+    <?php include("../templates/documents.php"); ?>
+    <!-- End Documents -->
   <?php endif; ?>
 
 
