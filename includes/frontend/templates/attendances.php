@@ -436,7 +436,7 @@ if (isset($_SESSION["session_add_absen_pagi_success"]) && isset($_SESSION["expir
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       Swal.fire({
-        title: "Absen masuk berhasil dilakukan!",
+        title: "Absen masuk berhasil dilakukan!💯",
         icon: "success",
         position: "center",
         timer: 4000
@@ -452,7 +452,7 @@ if (isset($_SESSION["session_add_absen_sakit_success"]) && isset($_SESSION["expi
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       Swal.fire({
-        title: "Semoga cepat sembuh ya :)",
+        title: "Semoga cepat sembuh ya ☹️🤗",
         icon: "success",
         position: "center",
         timer: 4000
@@ -468,7 +468,7 @@ if (isset($_SESSION["session_add_absen_izin_success"]) && isset($_SESSION["expir
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       Swal.fire({
-        title: "Semoga aktifitasnya hari ini dilancarkan :)",
+        title: "Semoga aktifitasnya hari ini dilancarkan👌😉",
         icon: "success",
         position: "center",
         timer: 4000
@@ -483,7 +483,7 @@ if (isset($_SESSION["session_add_absen_pulang_success"]) && isset($_SESSION["exp
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       Swal.fire({
-        title: "Terima kasih sudah bekerja hari ini!",
+        title: "Terima kasih sudah bekerja hari ini!😀",
         icon: "success",
         position: "center",
         timer: 4000
@@ -521,7 +521,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
         // Buat session dengan nama "session_add_absen_pagi_success" dengan waktu kadaluarsa
         $_SESSION["session_add_absen_pagi_success"] = $addSuccess;
-        $_SESSION["expiry_time_add_absen_pagi_success_pagi"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+        $_SESSION["expiry_time_add_absen_pagi_success_pagi"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
         ?>
       <?php endif; ?>
     <?php endif; ?>
@@ -534,7 +534,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
         // Buat session dengan nama "session_add_absen_sakit_success" dengan waktu kadaluarsa
         $_SESSION["session_add_absen_sakit_success"] = $addSuccess;
-        $_SESSION["expiry_time_add_absen_sakit_success_sakit"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+        $_SESSION["expiry_time_add_absen_sakit_success_sakit"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
         ?>
       <?php endif; ?>
     <?php endif; ?>
@@ -547,7 +547,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
         // Buat session dengan nama "session_add_absen_izin_success" dengan waktu kadaluarsa
         $_SESSION["session_add_absen_izin_success"] = $addSuccess;
-        $_SESSION["expiry_time_add_absen_izin_success_izin"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+        $_SESSION["expiry_time_add_absen_izin_success_izin"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
         ?>
       <?php endif; ?>
     <?php endif; ?>
@@ -566,7 +566,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
         // Buat session dengan nama "session_add_absen_pagi_success" dengan waktu kadaluarsa
         $_SESSION["session_add_absen_pagi_success"] = $addSuccess;
-        $_SESSION["expiry_time_add_absen_pagi_success_pagi"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+        $_SESSION["expiry_time_add_absen_pagi_success_pagi"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
         ?>
       <?php endif; ?>
     <?php endif; ?>
@@ -579,7 +579,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
         // Buat session dengan nama "session_add_absen_sakit_success" dengan waktu kadaluarsa
         $_SESSION["session_add_absen_sakit_success"] = $addSuccess;
-        $_SESSION["expiry_time_add_absen_sakit_success_sakit"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+        $_SESSION["expiry_time_add_absen_sakit_success_sakit"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
         ?>
       <?php endif; ?>
     <?php endif; ?>
@@ -592,7 +592,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
         // Buat session dengan nama "session_add_absen_izin_success" dengan waktu kadaluarsa
         $_SESSION["session_add_absen_izin_success"] = $addSuccess;
-        $_SESSION["expiry_time_add_absen_izin_success_izin"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+        $_SESSION["expiry_time_add_absen_izin_success_izin"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
         ?>
       <?php endif; ?>
     <?php endif; ?>
@@ -609,7 +609,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
     // Buat session dengan nama "session_add_absen_pulang_success" dengan waktu kadaluarsa
     $_SESSION["session_add_absen_pulang_success"] = $addSuccess;
-    $_SESSION["expiry_time_add_absen_pulang_success_pulang"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+    $_SESSION["expiry_time_add_absen_pulang_success_pulang"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
     ?>
   <?php endif; ?>
 <?php endif; ?>
@@ -622,7 +622,7 @@ if (isset($_SESSION["session_deleted_success"]) && isset($_SESSION["expiry_time_
 
     // Buat session dengan nama "session_deleted_success" dengan waktu kadaluarsa
     $_SESSION["session_deleted_success"] = $deletedSuccess;
-    $_SESSION["expiry_time_deleted_success"] = time() + 6; // Waktu kadaluarsa dalam 5 detik
+    $_SESSION["expiry_time_deleted_success"] = time() + 3; // Waktu kadaluarsa dalam 5 detik
     ?>
   <?php endif; ?>
 <?php endif; ?>
