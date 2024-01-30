@@ -697,6 +697,93 @@ function search_work_program($keyword)
 }
 
 
+
+
+// ========================================
+// FUNCTION STRUCTURE ORGANIZATION
+// ========================================
+// === FUNCTION UPDATE/EDIT STRUCTURE ORGANIZATION ===
+function structure_organization($data)
+{
+  global $conn;
+
+  $id = htmlspecialchars(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode(base64_decode($data["id"]))))))))));
+  $oldFile = htmlspecialchars($data["old_file"]);
+
+  if ($_FILES['gambar']['error'] === 4) {
+    $gambar = $oldFile;
+  } else {
+    $gambar = upload_img_structure_organization();
+  }
+
+  $query = "UPDATE tb_organization SET
+  gambar = '$gambar'
+  WHERE id = '$id'
+  ";
+  mysqli_query($conn, $query);
+
+  return mysqli_affected_rows($conn);
+}
+
+// ========================================
+// FUNCTION UPLOAD IMAGE STRUCTURE ORGANIZATION
+// ========================================
+function upload_img_structure_organization()
+{
+
+  $fileName = $_FILES['gambar']['name'];
+  $fileSize = $_FILES['gambar']['size'];
+  $error = $_FILES['gambar']['error'];
+  $tmpName = $_FILES['gambar']['tmp_name'];
+
+  // cek apakah ada file yang diupload atau tidak
+  if ($error === 4) {
+    echo "
+		<script>
+			alert('Foto Perusahaan Atau Instansi Wajib Diupload');
+      document.location.href = 'register';
+		</script>";
+    return false;
+  }
+
+  // cek apakah yang diupload adalah file
+  $extensionFileValid = ['jpg', 'jpeg', 'png'];
+  $extensionFile = explode('.', $fileName);
+  $extensionFile = strtolower(end($extensionFile));
+  if (!in_array($extensionFile, $extensionFileValid)) {
+    echo "
+		<script>
+			alert('Yang anda upload bukan format file yang diminta');
+      document.location.href = '';
+		</script>";
+    return false;
+  }
+
+  // cek ukuran file file yang diupload
+  if ($fileSize > 1000000) {
+    echo "
+		<script>
+			alert('Ukuran file terlalu besar');
+      document.location.href = '';
+		</script>";
+    return false;
+  }
+
+  // lolos pengecekan, file siap di upload
+  // generate nama file baru
+  $newFileName = uniqid($fileName . '_');
+  $newFileName .= '.';
+  $newFileName .= $extensionFile;
+
+  move_uploaded_file($tmpName, '../../../assets/img/gallery/' . $newFileName);
+  return $newFileName;
+}
+
+
+
+
+
+
 // ========================================
 // FUNCTION CATEGORY GALLERY
 // ========================================

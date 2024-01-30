@@ -51,6 +51,9 @@ if ($_GET["pages"] === "locations") {
 if ($_GET["pages"] === "services") {
   $pageTitle = "Layanan";
 }
+if ($_GET["pages"] === "structure-organization") {
+  $pageTitle = "Struktur Organisasi";
+}
 if ($_GET["pages"] === "gallery") {
   $pageTitle = "Galeri";
 }
@@ -107,6 +110,7 @@ if (
   $_GET["pages"] !== "home" and
   $_GET["pages"] !== "welcome" and
   $_GET["pages"] !== "locations" and
+  $_GET["pages"] !== "structure-organization" and
   $_GET["pages"] !== "gallery" and
   $_GET["pages"] !== "team" and
   $_GET["pages"] !== "about" and
@@ -173,6 +177,12 @@ if (
     <!-- End Attendances -->
   <?php endif; ?>
 
+
+  <?php if ($_GET["pages"] === "structure-organization") : ?>
+    <!-- ======= Structure organization ======= -->
+    <?php include("../templates/structure-organization.php"); ?>
+    <!-- End Structure organization -->
+  <?php endif; ?>
 
   <?php if ($_GET["pages"] === "gallery") : ?>
     <!-- ======= Gallery ======= -->
