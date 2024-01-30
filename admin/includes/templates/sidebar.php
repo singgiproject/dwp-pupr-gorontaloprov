@@ -44,12 +44,18 @@ if (
 
 // MENU ACTIVE PAGE SISTEM
 if (
+  $_GET["pages"] === "structure-organization" or
   $_GET["pages"] === "gallery" or
   $_GET["pages"] === "team"
 ) {
   $pageSystemActive = "active-sidebar";
 }
 
+if (
+  $_GET["pages"] === "structure-organization"
+) {
+  $structureActive = "active-sidebar-list";
+}
 if (
   $_GET["pages"] === "gallery"
 ) {
@@ -163,6 +169,11 @@ if (
           <i class="bi bi-globe"></i><span>Halaman Aplikasi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="page-website-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="<?= $structureActive; ?>">
+            <a href="<?= $url; ?>admin/dashboard/structure-organization">
+              <i class="bi bi-circle"></i><span>Struktur Organisasi</span>
+            </a>
+          </li>
           <li class="<?= $galleryActive; ?>">
             <a href="<?= $url; ?>admin/dashboard/gallery">
               <i class="bi bi-circle"></i><span>Galeri</span>
