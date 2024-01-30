@@ -153,6 +153,12 @@ if (isset($_SESSION["login"])) {
 $documents = query("SELECT * FROM tb_documents");
 
 // ------------------------------------------------
+// ATTENDANCES
+// ------------------------------------------------
+// === QUERY TABLE ATTENDANCES ===
+$attendances = query("SELECT * FROM tb_attendances");
+
+// ------------------------------------------------
 // SEARCH DATA 
 // ------------------------------------------------
 if (isset($_GET["search"])) {

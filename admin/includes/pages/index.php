@@ -91,6 +91,12 @@ if ($_GET["pages"] === "documents") {
 }
 // ------ end PAGE DOCUMENTS ------
 
+// ------ PAGE DOCUMENTS ------
+if ($_GET["pages"] === "attendances") {
+  $pageTitle = "Absensi";
+}
+// ------ end PAGE DOCUMENTS ------
+
 if ($_GET["pages"] === "users") {
   $pageTitle = "Akun User";
 }
@@ -111,7 +117,8 @@ if (
   $_GET["pages"] !== "news" and
   $_GET["pages"] !== "users" and
   $_GET["pages"] !== "work-program" and
-  $_GET["pages"] !== "documents"
+  $_GET["pages"] !== "documents" and
+  $_GET["pages"] !== "attendances"
 ) {
   header("Location:home");
   exit;
@@ -158,6 +165,12 @@ if (
     <!-- ======= Documents ======= -->
     <?php include("../templates/documents.php"); ?>
     <!-- End Documents -->
+  <?php endif; ?>
+
+  <?php if ($_GET["pages"] === "attendances") : ?>
+    <!-- ======= Attendances ======= -->
+    <?php include("../templates/attendances.php"); ?>
+    <!-- End Attendances -->
   <?php endif; ?>
 
 

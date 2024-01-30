@@ -13,7 +13,8 @@ if ($_GET["pages"] === "home" or $_GET["pages"] === "welcome") {
 if (
   $_GET["pages"] === "news" or
   $_GET["pages"] === "work-program" or
-  $_GET["pages"] === "documents"
+  $_GET["pages"] === "documents" or
+  $_GET["pages"] === "attendances"
 ) {
   $componentActive = "active-sidebar";
 }
@@ -33,6 +34,12 @@ if (
   $_GET["pages"] === "documents"
 ) {
   $documentsActive = "active-sidebar-list";
+}
+
+if (
+  $_GET["pages"] === "attendances"
+) {
+  $attendancesActive = "active-sidebar-list";
 }
 
 // MENU ACTIVE PAGE SISTEM
@@ -135,6 +142,12 @@ if (
           <li class="<?= $documentsActive; ?>">
             <a href="<?= $url; ?>admin/dashboard/documents/page/1">
               <i class="bi bi-circle"></i><span>Dokumen</span>
+            </a>
+          </li>
+
+          <li class="<?= $attendancesActive; ?>">
+            <a href="<?= $url; ?>admin/dashboard/attendances/page/1">
+              <i class="bi bi-circle"></i><span>Absensi</span>
             </a>
           </li>
         </ul>
